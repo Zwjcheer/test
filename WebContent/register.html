@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="./ajax.js"></script>
+</head>
+<body bgcolor="beige">
+
+ 
+     <center>
+      <form action="/StudentManagementSystem/RegisterStudentServlet" method="post"
+      enctype="multipart/form-data" >
+      <table>
+      <tr>
+      	<td> 用户名：&nbsp;&nbsp;&nbsp;<input id="user" type="text"  name="username" onblur="clk()" /></td>
+      	<td> <span id="sp"></span></td>
+      </tr>
+      
+      	<tr>
+            <td>密码：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input  type="password"  name="password" id="ps"/></td>
+       </tr>
+       
+       <tr>
+            <td>性别：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            
+            <select name='sex' id='select'>
+            <option value="0">女</option>
+            <option value="1">男</option>>
+            </select>
+            </td>
+        </tr>
+        
+        <tr>
+        <td>用户年龄:&nbsp;&nbsp;
+        <input type="text" name="age" id="age"></td>
+        </tr>
+        
+        <tr>
+        <td>用户电话：
+        <input type="text" name="mobile" id="mobile" ></td>
+        </tr>
+        
+        <tr>
+        <td>用户地址：
+        <textarea rows="5" cols="45" name="address" id="address"></textarea></td>
+        </tr>
+        
+        <tr>
+        <td >用户权限：&nbsp;&nbsp;
+                     学生：<input type="radio" name="ismanager" id="ismanager" value="0">管理员：
+        <input  type="radio" name="ismanager" id="ismanager" value="1"/>
+        </td>
+        </tr>
+    <tr>    
+       <td> 上传的头像:<input type="file" name="header" id="header"/></td><br/>
+     </tr>   
+          <tr><td>  <input  type="submit" value="提交" id="btnlogin"  /></td></tr>
+            </table>   
+      </form>
+      </center>
+      <script type="text/javascript">
+      //获取username里面的value
+      function clk(){
+    	//  alert("aa")
+       var username=document.getElementById("user");
+    	var password=document.getElementById("ps");
+      var value=username.value;
+    //  var values=password.value;
+     // alert(value)
+      //获取ajax对象
+      if(value!=null || value.equals("")){
+    	  //alert("sh")
+  		var ajax=getAjax();
+  		//监听状态改变事件
+  		ajax.onreadystatechange=function(){
+  				alert(ajax.readyState) 
+  			if( ajax.status==200 && ajax.readyState==4){
+  				//请求成功并完成数据
+  				var result=ajax.responseText;
+  				//alert(result)
+  				var span=document.getElementById("sp");
+  				if("0"==result){
+  					span.innerHTML="<span style='color: red;'>用户名已经存在，请重新注册</span>"
+  				}/* else{
+  					window.location.href="/StudentManger/java.html"
+  				} */
+  			}
+  		}
+  		
+      
+      //3 设置请求路径和方法
+      ajax.open("POST","/StudentManagementSystem/RegisterAjaxServlet",true)
+      //4 发起请求
+     // ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+      ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+      ajax.send("username="+value);
+      }
+     
+  }
+      
+      </script>
+
+</body>
+</html>
